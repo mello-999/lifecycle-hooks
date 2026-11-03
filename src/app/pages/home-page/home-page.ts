@@ -1,4 +1,4 @@
-import { afterEveryRender, afterNextRender, afterRenderEffect, Component, effect, OnChanges, OnInit } from '@angular/core';
+import { afterEveryRender, afterNextRender, afterRenderEffect, Component, effect, OnChanges, OnInit, signal, } from '@angular/core';
 
 
 
@@ -13,12 +13,29 @@ console.log(`${ messages[0] } %c${ messages.slice(1).join(',') } `, 'color: #bad
 @Component({
   selector: 'app-home-page',
   imports: [],
-  template: `<p>home-page works!</p>`,
+  templateUrl: './home-page.html',
 })
 export class HomePage implements OnInit, OnChanges {
 
+   traditionalProperty = 'Maurucio'; 
+   signalProperty = signal('Mauricio');
+
 constructor()  {
   log('Constructor llamado');
+  
+  setTimeout(() => {
+    this.signalProperty.set('Juan Carlos');
+  }, 2000);
+  
+}
+
+
+changeTraditional() {
+  this.traditionalProperty = 'Mauricio Donoso';
+}
+
+changeSignal() {
+  this.signalProperty.set('Mauricio Donoso');
 }
 
 
@@ -28,7 +45,7 @@ basicEffect = effect (( onCleanup ) =>{
   
   onCleanup(() => {
     log('onCleanup','Se ejecuta cuando el efecto se va a destruir');
-  })
+  });
   
 });
 
@@ -77,14 +94,14 @@ ngOnDestroy() {
 afterNextRenderEffect = afterNextRender(() =>{
    log(
     'afterNextRender',
-     '		Runs once the next time that all components have been rendered to the DOM.'
+     'Runs once the next time that all components have been rendered to the DOM.'
    );
   });
 
-afterRender = afterNextRender(() =>{
+afterRender = afterEveryRender(() =>{
    log(
-    'afterNextRender',
-     '		Runs once the next time that all components have been rendered to the DOM.'
+    'afterEveryRender',
+     'Runs every time all components have been rendered to the DOM.'
    );
   });
 
