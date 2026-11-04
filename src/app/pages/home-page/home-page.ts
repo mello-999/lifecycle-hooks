@@ -1,4 +1,5 @@
 import { afterEveryRender, afterNextRender, afterRenderEffect, Component, effect, OnChanges, OnInit, signal, } from '@angular/core';
+import { Title } from '../../components/tittle/title';
 
 
 
@@ -12,7 +13,7 @@ console.log(`${ messages[0] } %c${ messages.slice(1).join(',') } `, 'color: #bad
 
 @Component({
   selector: 'app-home-page',
-  imports: [],
+  imports: [ Title ],
   templateUrl: './home-page.html',
 })
 export class HomePage implements OnInit, OnChanges {
@@ -23,9 +24,9 @@ export class HomePage implements OnInit, OnChanges {
 constructor()  {
   log('Constructor llamado');
   
-  setTimeout(() => {
-    this.signalProperty.set('Juan Carlos');
-  }, 2000);
+//   setTimeout(() => {
+//   this.signalProperty.set('Juan Carlos');
+// }, 2000);
   
 }
 
